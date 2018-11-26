@@ -1,0 +1,8 @@
+/root/eclipse-workspace_git/ProyectoAMBSpark/src/main/java/com/ibm/proyectoamb/spark/CargaDatosTXTElasticSearch.java
+/root/eclipse-workspace_git/ProyectoAMBSpark/src/main/java/com/ibm/proyectoamb/spark/bean/DatosMeteorologicos.java
+/root/eclipse-workspace_git/ProyectoAMBSpark/src/main/java/com/ibm/proyectoamb/spark/CargaDatosJSONMongoDB.java
+/root/eclipse-workspace_git/ProyectoAMBSpark/src/main/java/com/ibm/proyectoamb/spark/CargaDatosTXTConFiltroSQL.java
+/root/eclipse-workspace_git/ProyectoAMBSpark/src/main/java/com/ibm/proyectoamb/spark/CargaDatosTXT.java
+/root/eclipse-workspace_git/ProyectoAMBSpark/src/main/java/com/ibm/proyectoamb/spark/CargaDatosTXTConFiltroAPISparkSQL.java
+/root/eclipse-workspace_git/ProyectoAMBSpark/src/main/java/com/ibm/proyectoamb/spark/CargaDatosTXTMongoDB.java
+/root/eclipse-workspace_git/ProyectoAMBSpark/src/main/java/com/ibm/proyectoamb/spark/CargaDatosTXTHDFS.java

@@ -1,0 +1,8 @@
+com/ibm/proyectoamb/spark/CargaDatosTXT.class
+com/ibm/proyectoamb/spark/CargaDatosTXTHDFS.class
+com/ibm/proyectoamb/spark/CargaDatosTXTMongoDB.class
+com/ibm/proyectoamb/spark/bean/DatosMeteorologicos.class
+com/ibm/proyectoamb/spark/CargaDatosTXTElasticSearch.class
+com/ibm/proyectoamb/spark/CargaDatosTXTConFiltroSQL.class
+com/ibm/proyectoamb/spark/CargaDatosJSONMongoDB.class
+com/ibm/proyectoamb/spark/CargaDatosTXTConFiltroAPISparkSQL.class
