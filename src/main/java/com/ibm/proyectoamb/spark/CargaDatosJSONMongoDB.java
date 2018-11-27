@@ -69,7 +69,19 @@ public class CargaDatosJSONMongoDB {
 	@SuppressWarnings("unused")
 	private static Dataset<Row> obtenerDatosCVS(final SparkSession sqlContext) {
 		
-		return obtenerCVS_Control2(sqlContext);
+		final String path = ruta_fichero.concat("/ingrid/Control1.csv");
+		
+		final Dataset<Row> rows  = sqlContext.read()
+								   .format("cvs")
+								   .option("header", "true")
+								   .option("inferSchema", "true")
+								   .load(path);
+		
+		//return obtenerCVS_Control2(sqlContext);
+		
+		rows.show();
+		
+		return rows;
 	}
 	
 	public static Dataset<Row> obtenerCVS_Control1(SparkSession sqlContext) {
