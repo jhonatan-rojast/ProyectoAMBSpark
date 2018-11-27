@@ -8,9 +8,13 @@ import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.Metadata;
+import org.apache.spark.sql.types.StructField;
 
 import com.ibm.proyectoamb.spark.bean.Control_1;
 import com.ibm.proyectoamb.spark.bean.Control_2;
+import com.ibm.proyectoamb.spark.util.Utils;
 import com.mongodb.spark.MongoSpark;
 public class CargaDatosJSONMongoDB {
 	
@@ -71,18 +75,17 @@ public class CargaDatosJSONMongoDB {
 		
 		final String path = ruta_fichero.concat("/ingrid/viatun.csv");
 		
-		final Dataset<Row> rows  = sqlContext.read()
+		Dataset<Row> rows  = sqlContext.read()
 								   .format("com.databricks.spark.csv")
 								   .option("header", "true")
 								   .option("inferSchema", "true")
 								   .option("delimiter", ";")
 								   .load(path);
 		
-		//return obtenerCVS_Control2(sqlContext);
-		
-		rows.show();
-		
+		rows = Utils.alterarEstructuraCuerpoViaTunel(rows);
+				
 		return rows;
+		//return obtenerCVS_Control2(sqlContext);
 	}
 	
 	public static Dataset<Row> obtenerCVS_Control1(SparkSession sqlContext) {
