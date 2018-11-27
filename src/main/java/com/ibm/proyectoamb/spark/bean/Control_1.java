@@ -1,6 +1,6 @@
 package com.ibm.proyectoamb.spark.bean;
 
-public class Control {
+public class Control_1 {
 	
 	private String fecha;
 	private String hora;
@@ -8,11 +8,11 @@ public class Control {
 	private String lugarAveria;
 	private String nombreUsuario;
 	
-	public Control() {
+	public Control_1() {
 		// TODO Auto-generated constructor stub
 	}
 		
-	public Control(String fecha, String hora, String textoAviso, String lugarAveria, String nombreUsuario) {
+	public Control_1(String fecha, String hora, String textoAviso, String lugarAveria, String nombreUsuario) {
 		this.fecha = fecha;
 		this.hora = hora;
 		this.textoAviso = textoAviso;

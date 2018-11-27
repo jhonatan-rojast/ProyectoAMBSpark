@@ -9,7 +9,8 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
-import com.ibm.proyectoamb.spark.bean.Control;
+import com.ibm.proyectoamb.spark.bean.Control_1;
+import com.ibm.proyectoamb.spark.bean.Control_2;
 import com.mongodb.spark.MongoSpark;
 public class CargaDatosJSONMongoDB {
 	
@@ -67,46 +68,88 @@ public class CargaDatosJSONMongoDB {
 	
 	@SuppressWarnings("unused")
 	private static Dataset<Row> obtenerDatosCVS(final SparkSession sqlContext) {
+		
+		return obtenerCVS_Control2(sqlContext);
+	}
+	
+	public static Dataset<Row> obtenerCVS_Control1(SparkSession sqlContext) {
+		
 		final String path = ruta_fichero.concat("/scada/Control1.csv");
 		
-		JavaRDD<Control> bean = sqlContext
-								.read()
-								.textFile(path)
-											.javaRDD().map(new Function<String, Control>() {
-												public Control call(String line) throws Exception {
-													 
-													  String[] arrays = line. split(";");
-													  
-											          Control c = new Control();
-											          c.setFecha(validarCaracteresEspeciales(arrays[0]));
-											          c.setHora(validarCaracteresEspeciales(arrays[1]));
-											          c.setTextoAviso(validarCaracteresEspeciales(arrays[2]));
-											          c.setLugarAveria(validarCaracteresEspeciales(arrays[3]));
-											          c.setNombreUsuario(validarCaracteresEspeciales(arrays[4]));
-											          
-											          return c;
-											        }
-											});
+		JavaRDD<Control_1> bean =	sqlContext
+						.read()
+						.textFile(path)
+									.javaRDD().map(new Function<String, Control_1>() {
+										public Control_1 call(String line) throws Exception {
+											 
+											  String[] arrays = line. split(";");
+											  
+									          Control_1 c = new Control_1
+									        		  ( validarCaracteresEspeciales(arrays[0]),
+									        		    validarCaracteresEspeciales(arrays[1]),
+									        		    validarCaracteresEspeciales(arrays[2]),
+									        		    validarCaracteresEspeciales(arrays[3]),
+									        		    validarCaracteresEspeciales(arrays[4]));
+									          
+									          return c;
+									        }
+									});
 		
-		 Dataset<Row> rows = sqlContext.createDataFrame(bean, Control.class);
+		Dataset<Row> rows = sqlContext.createDataFrame(bean, Control_1.class);
 		 
-		 final Row header= rows.first();
+		return eliminarCabeceraCVS(rows);
+	}
+	
+
+	public static Dataset<Row> obtenerCVS_Control2(SparkSession sqlContext) {
+		
+		final String path = ruta_fichero.concat("/scada/Control2.csv");
+				
+		JavaRDD<Control_2> bean =	sqlContext
+						.read()
+						.textFile(path)
+									.javaRDD().map(new Function<String, Control_2>() {
+										public Control_2 call(String line) throws Exception {
+											 
+											  String[] arrays = line. split(";");
+											  
+											  Control_2 c = new Control_2
+									        		  ( validarCaracteresEspeciales(arrays[0]),
+									        		    validarCaracteresEspeciales(arrays[1]),
+									        		    validarCaracteresEspeciales(arrays[2]),
+									        		    validarCaracteresEspeciales(arrays[3]),
+									        		    validarCaracteresEspeciales(arrays[4]),
+									        		    validarCaracteresEspeciales(arrays[5]));
+									          
+									          return c;
+									        }
+									});
+		
+		Dataset<Row> rows = sqlContext.createDataFrame(bean, Control_2.class);
+		 
+		return eliminarCabeceraCVS(rows);
+	}
+	
+	public static Dataset<Row> eliminarCabeceraCVS(Dataset<Row> rows) {
+		
+		final Row header= rows.first();
 		 
 		 Dataset<Row> dataPointsWithoutHeader = rows.filter(new FilterFunction<Row>() {
 			public boolean call(Row row) throws Exception {
 				    return !row.equals(header);
 			    }
 		});
-		
-		 dataPointsWithoutHeader.show();
 		 
+		 dataPointsWithoutHeader.show();
+		
 		return dataPointsWithoutHeader;
+		
 	}
 	
 	public static String validarCaracteresEspeciales(String input) {
 		  // Cadena de caracteres original a sustituir.
 		  String original = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
-		  // Cadena de caracteres ASCII que reemplazarán los originales.
+		  // Cadena de caracteres ASCII que reemplazarÃ¡n los originales.
 		  String ascii = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
 		  String output = input;
 		  for (int i=0; i<original.length(); i++) {
