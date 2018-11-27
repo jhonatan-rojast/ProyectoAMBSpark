@@ -14,7 +14,7 @@ import com.ibm.proyectoamb.spark.bean.Control_2;
 import com.mongodb.spark.MongoSpark;
 public class CargaDatosJSONMongoDB {
 	
-	static final String ruta_fichero = "/root/eclipse-workspace_git/ProyectoAMBSpark/src/main/resources";
+	static final String ruta_fichero = "/usr/local/repositorio_git/ProyectoAMBSpark/src/main/resources";
 
 	public static void main(String[] args) throws InterruptedException {
 		
@@ -23,8 +23,8 @@ public class CargaDatosJSONMongoDB {
 				.setMaster("local")
 				.set("spark.scheduler.mode", "FAIR")
 				.set("spark.scheduler.allocation.file", "/root/eclipse-workspace_git/ProyectoAMBSpark/src/main/resources/conf/conf-scheduler.xml")
-				.set("spark.mongodb.input.uri", "mongodb://127.0.0.1:27017/ambDB.control")
-				.set("spark.mongodb.output.uri", "mongodb://127.0.0.1:27017/ambDB.control");
+				.set("spark.mongodb.input.uri", "mongodb://127.0.0.1:27017/ambDB.tunel")
+				.set("spark.mongodb.output.uri", "mongodb://127.0.0.1:27017/ambDB.tunel");
 
 		final JavaSparkContext jsc = new JavaSparkContext(sparkConf);
 		final SparkSession sqlContext = SparkSession.builder().getOrCreate();
@@ -69,12 +69,13 @@ public class CargaDatosJSONMongoDB {
 	@SuppressWarnings("unused")
 	private static Dataset<Row> obtenerDatosCVS(final SparkSession sqlContext) {
 		
-		final String path = ruta_fichero.concat("/ingrid/Control1.csv");
+		final String path = ruta_fichero.concat("/ingrid/viatun.csv");
 		
 		final Dataset<Row> rows  = sqlContext.read()
-								   .format("cvs")
+								   .format("com.databricks.spark.csv")
 								   .option("header", "true")
 								   .option("inferSchema", "true")
+								   .option("delimiter", ";")
 								   .load(path);
 		
 		//return obtenerCVS_Control2(sqlContext);
